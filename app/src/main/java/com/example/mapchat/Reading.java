@@ -15,6 +15,8 @@ import android.widget.TextView;
 import com.example.mapchat.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 //import com.google.firebase.firestore.instance;
@@ -23,6 +25,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 //import com.google.firebase.firestore.getId;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.core.OrderBy;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +37,7 @@ import javax.xml.validation.Validator;
 public class Reading extends AppCompatActivity {
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
+    String user = FirebaseAuth.getInstance().getCurrentUser().getDisplayName();
     public static String Message = "ie.ul.myfirstapp.EXTRA_MESSAGE";
     public static ArrayList<String> values = new ArrayList<String>();
 
@@ -53,6 +58,12 @@ public class Reading extends AppCompatActivity {
 
         startActivity(intent);
         //finish();
+    }
+
+    public void onClickProfile(View view) {
+        Intent intent = new Intent(this,Profile.class);
+
+        startActivity(intent);
     }
 
     public void update() {
@@ -77,6 +88,12 @@ public class Reading extends AppCompatActivity {
                                 values.add(Message);
                             }
                             System.out.println(values);
+
+                            TextView welcome =findViewById(R.id.welcome);
+                            welcome.setText("Welcome "+user+"!");
+
+                            TextView profileClick =findViewById(R.id.profileClick);
+                            profileClick.setText(user);
 
                             TextView textView = findViewById(R.id.textView2);
                             textView.setText(values.get(0));
